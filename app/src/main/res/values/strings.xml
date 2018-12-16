@@ -2,4 +2,5 @@
     <string name="app_name">GMBN</string>
     <string name="play_video">Play video</string>
     <string name="published">Published: %1$s</string>
+    <string name="errorDescription">Sorry there has been an error, please try again later</string>
 </resources>

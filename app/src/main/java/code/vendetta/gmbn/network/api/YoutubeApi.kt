@@ -1,6 +1,5 @@
 package code.vendetta.gmbn.network.api
 
-import code.vendetta.gmbn.BuildConfig
 import code.vendetta.gmbn.model.FeedData
 import code.vendetta.gmbn.network.BaseApi
 import code.vendetta.gmbn.network.services.YoutubeService
@@ -28,7 +27,7 @@ class YoutubeApi(private val endpoint: String) : BaseApi() {
     fun getUploads(): Single<Response<FeedData>> {
         return youtubeService.getUploads(
             "snippet",
-            "10",
+            "25",
             "UU_A--fhX5gea0i4UtpD99Gg"
 
         )

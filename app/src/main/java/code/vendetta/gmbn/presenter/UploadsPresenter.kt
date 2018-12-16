@@ -24,7 +24,7 @@ class UploadsPresenter(private val view: UploadsView) {
                 .subscribe({
                     it.body()?.let { it -> view.populateList(it) }
                 }, {
-                    view.hideProgress()
+                    view.showError()
                 })
         )
     }

@@ -16,6 +16,9 @@ import kotlinx.android.synthetic.main.fragment_uploads.*
 
 class UploadsFragment : Fragment(), UploadsView {
 
+    var isLastPage: Boolean = false
+    var isLoading: Boolean = false
+
     private val presenter: UploadsPresenter by lazy {
         UploadsPresenter(this)
     }
@@ -33,30 +36,44 @@ class UploadsFragment : Fragment(), UploadsView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.apply {
-            layoutManager = LinearLayoutManager(activity)
-        }
+        val layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = layoutManager
         presenter.getData()
 
         pullToRefresh.setOnRefreshListener {
             presenter.getData()
         }
 
-        recyclerView.addOnScrollListener(object : EndlessRecyclerOnScrollListener() {
-            override fun onLoadMore() {
-                progressBar.visibility = View.VISIBLE
-                presenter.getData()
+        recyclerView?.addOnScrollListener(object : EndlessRecyclerOnScrollListener(layoutManager) {
+            override fun isLastPage(): Boolean {
+                return isLastPage
             }
 
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+
+            override fun loadMoreItems() {
+                isLoading = true
+                presenter.getData()
+            }
         })
 
     }
 
     override fun populateList(data: FeedData) {
-        feedAdapter.submitList(data.items)
-        recyclerView.adapter = feedAdapter
+        recyclerView.visibility = View.VISIBLE
+        errorContainer.visibility = View.GONE
         pullToRefresh.isRefreshing = false
 
+        feedAdapter.submitList(data.items)
+        recyclerView.adapter = feedAdapter
+    }
+
+    override fun showError() {
+        errorContainer.visibility = View.VISIBLE
+        pullToRefresh.isRefreshing = false
+        recyclerView.visibility = View.GONE
     }
 
     override fun showProgress() {

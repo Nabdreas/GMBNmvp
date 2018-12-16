@@ -6,4 +6,5 @@ interface UploadsView {
     fun populateList(data: FeedData)
     fun hideProgress()
     fun showProgress()
+    fun showError()
 }
