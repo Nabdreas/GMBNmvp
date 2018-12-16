@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GMBN</string>
+    <string name="play_video">Play video</string>
+    <string name="published">Published: %1$s</string>
+</resources>
