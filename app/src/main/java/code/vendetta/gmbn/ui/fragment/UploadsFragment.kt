@@ -16,8 +16,9 @@ import kotlinx.android.synthetic.main.fragment_uploads.*
 
 class UploadsFragment : Fragment(), UploadsView {
 
-    var isLastPage: Boolean = false
-    var isLoading: Boolean = false
+    private val offset = "15"
+
+    private lateinit var endlessRecyclerOnScrollListener: EndlessRecyclerOnScrollListener
 
     private val presenter: UploadsPresenter by lazy {
         UploadsPresenter(this)
@@ -38,24 +39,15 @@ class UploadsFragment : Fragment(), UploadsView {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager
-        presenter.getData()
+        presenter.getData(offset)
 
         pullToRefresh.setOnRefreshListener {
-            presenter.getData()
+            presenter.getData(offset)
         }
 
         recyclerView?.addOnScrollListener(object : EndlessRecyclerOnScrollListener(layoutManager) {
-            override fun isLastPage(): Boolean {
-                return isLastPage
-            }
-
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-
-            override fun loadMoreItems() {
-                isLoading = true
-                presenter.getData()
+            override fun loadMoreItems(current: Int, totalItemCount: Int) {
+                presenter.getData(current.toString())
             }
         })
 

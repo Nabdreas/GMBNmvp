@@ -24,10 +24,10 @@ class YoutubeApi(private val endpoint: String) : BaseApi() {
         }
     }
 
-    fun getUploads(): Single<Response<FeedData>> {
+    fun getUploads(offset: String): Single<Response<FeedData>> {
         return youtubeService.getUploads(
             "snippet",
-            "25",
+            offset,
             "UU_A--fhX5gea0i4UtpD99Gg"
 
         )

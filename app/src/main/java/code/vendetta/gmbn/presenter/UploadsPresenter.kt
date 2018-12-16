@@ -12,9 +12,9 @@ class UploadsPresenter(private val view: UploadsView) {
         YoutubeApi("https://www.googleapis.com")
     }
 
-    fun getData() {
+    fun getData(offset: String) {
         compositeDisposable.add(
-            youtubeApi.getUploads()
+            youtubeApi.getUploads(offset)
                 .doOnSubscribe {
                     view.showProgress()
                 }

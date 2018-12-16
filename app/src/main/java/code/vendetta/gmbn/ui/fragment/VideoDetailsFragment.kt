@@ -13,6 +13,9 @@ import kotlinx.android.synthetic.main.fragment_video_details.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.Intent
+import android.net.Uri
+
 
 class VideoDetailsFragment : Fragment() {
 
@@ -46,7 +49,9 @@ class VideoDetailsFragment : Fragment() {
         publishedVideoDuration.text = getString(R.string.published, outputFormat.format(date))
 
         playVideoButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Video id: " + data.resourceId.videoId, Toast.LENGTH_SHORT).show()
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + data.resourceId.videoId))
+            intent.putExtra("force_fullscreen",true)
+            startActivity(intent)
         }
     }
 
