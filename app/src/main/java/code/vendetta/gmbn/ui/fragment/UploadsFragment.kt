@@ -47,7 +47,7 @@ class UploadsFragment : Fragment(), UploadsView {
 
         recyclerView?.addOnScrollListener(object : EndlessRecyclerOnScrollListener(layoutManager) {
             override fun loadMoreItems(current: Int, totalItemCount: Int) {
-                presenter.getData(current.toString())
+                //presenter.getData(current.toString())
             }
         })
 
